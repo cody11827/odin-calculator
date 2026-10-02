@@ -29,12 +29,45 @@ function operate(operator,a,b){
 }
 
 
+function isOperator(character){
+    if (character === '+' || character === '-' || character === '*' || character === '/'){
+        return true;
+    }
+    return false;
+}
+
+
+
+let calculatorInput = ""
+
+function calculate(){
+    
+}
+
 function onCalculatorButtonClicked(e){
+    console.log("clicked");
     let target = e.target;
+
+    let newInput = e.target.textContent;
+    let lastInput = calculatorInput.at(-1);
+
+    if (isOperator(newInput) && isOperator(lastInput)){
+        console.log("both operators");
+        return;
+    }
+
+    calculatorInput += newInput;
+
+    console.log(calculatorInput);
+
+    if (newInput === '='){
+        calculate();
+    }
+
 }
 
 
 let buttons = document.querySelector(".buttons");
 
 
-buttons.addEventListener('click',onCalculatorButtonClicked)
+buttons.addEventListener("click",onCalculatorButtonClicked)
