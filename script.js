@@ -17,11 +17,11 @@ function divide(a,b){
 
 
 function operate(operator,a,b){
-    if (operator = '+'){
+    if (operator === '+'){
         return add(a,b);
-    }else if(operator = '-'){
+    }else if(operator === '-'){
         return subtract(a,b);
-    }else if(operator ='*'){
+    }else if(operator === '*'){
         return multiply(a,b);
     }else{
         return divide(a,b);
@@ -39,30 +39,47 @@ function isOperator(character){
 
 
 let calculatorInput = ""
+let operator = null
 
 function calculate(){
-    
+    let numbers = calculatorInput.split(/[+*/-]/)
+    if (numbers.length <= 1){
+        console.log("numbers <= 1")
+        return Number(numbers[0]);
+    }
+
+    if (operator == null){
+        console.log("opperater == null")
+        return Number(numbers[0]);
+    }
+    return operate(operator,Number(numbers[0]),Number(numbers[1]));
 }
 
 function onCalculatorButtonClicked(e){
-    console.log("clicked");
     let target = e.target;
 
     let newInput = e.target.textContent;
-    let lastInput = calculatorInput.at(-1);
 
-    if (isOperator(newInput) && isOperator(lastInput)){
-        console.log("both operators");
+    let targetIsOperator = isOperator(newInput);
+    if (operator !== null && targetIsOperator || targetIsOperator && calculatorInput.length === 0){
         return;
     }
 
-    calculatorInput += newInput;
+    if (targetIsOperator){
+        console.log("set operator");
+        operator = newInput;
+    }
 
-    console.log(calculatorInput);
 
     if (newInput === '='){
-        calculate();
+        console.log("calculate: ");
+        calculatorInput = calculate()
+        console.log(calculatorInput);
+        operator = null;
+        return;
     }
+    calculatorInput += newInput;
+    console.log(calculatorInput);
 
 }
 
