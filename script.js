@@ -40,25 +40,40 @@ function isOperator(character){
 
 let calculatorInput = ""
 let operator = null
+let number1HasDecimal = false
+let number2HasDecimal = false
+let inputBox = document.querySelector("input")
 
 function calculate(){
     let numbers = calculatorInput.split(/[+*/-]/)
-    if (numbers.length <= 1){
+    let newNumber = NaN;
+    if (numbers.length <= 1 || operator == null){
         console.log("numbers <= 1")
-        return Number(numbers[0]);
+        newNumber = Number(numbers[0]);
+    }else{
+        newNumber = operate(operator,Number(numbers[0]),Number(numbers[1]));
     }
 
-    if (operator == null){
-        console.log("opperater == null")
-        return Number(numbers[0]);
-    }
-    return operate(operator,Number(numbers[0]),Number(numbers[1]));
+    number1HasDecimal = !Number.isInteger(newNumber);
+    number2HasDecimal = false;
+
+    return newNumber
 }
+
 
 function onCalculatorButtonClicked(e){
     let target = e.target;
 
     let newInput = e.target.textContent;
+
+    if(newInput == "clear"){
+        calculatorInput = "";
+        operator = null;
+        number1HasDecimal = false
+        number2HasDecimal = false
+        inputBox.placeholder = calculatorInput;
+        return;
+    }
 
     let targetIsOperator = isOperator(newInput);
     if (operator !== null && targetIsOperator || targetIsOperator && calculatorInput.length === 0){
@@ -69,22 +84,35 @@ function onCalculatorButtonClicked(e){
         console.log("set operator");
         operator = newInput;
     }
-
-
     if (newInput === '='){
         console.log("calculate: ");
-        calculatorInput = calculate()
+        calculatorInput = calculate();
         console.log(calculatorInput);
         operator = null;
-        return;
+    }else if (newInput === '.'){
+        if(operator !== null){
+            if(!number2HasDecimal){
+                calculatorInput += newInput;
+                number2HasDecimal = true;
+            }
+        }else{
+            if(!number1HasDecimal){
+                calculatorInput += newInput;
+                number1HasDecimal = true;
+            }
+        }
+    }else{
+        calculatorInput += newInput;
+        console.log(calculatorInput);
     }
-    calculatorInput += newInput;
-    console.log(calculatorInput);
+    
+    inputBox.placeholder = calculatorInput;
 
 }
 
 
 let buttons = document.querySelector(".buttons");
+
 
 
 buttons.addEventListener("click",onCalculatorButtonClicked)
