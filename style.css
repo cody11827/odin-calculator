@@ -2,9 +2,27 @@
 .buttons{
     display: flex;
     flex-wrap: wrap;
+    flex-direction: row;
     gap: 16px;
+    align-content: center;
+    justify-content: center;
 }
 
-#button{
+button{
     display : flex;
+    flex-basis : calc(25% - 13px);
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+
+}
+
+body{
+    background-color: rgb(0, 10, 80);
+
+}
+
+input{
+    display: flex;
+    flex-
 }

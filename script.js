@@ -66,7 +66,7 @@ function onCalculatorButtonClicked(e){
 
     let newInput = e.target.textContent;
 
-    if(newInput == "clear"){
+    if(newInput == "clr"){
         calculatorInput = "";
         operator = null;
         number1HasDecimal = false
