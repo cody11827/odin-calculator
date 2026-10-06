@@ -12,6 +12,10 @@ function multiply(a,b){
 }
 
 function divide(a,b){
+    if (b === 0){
+        alert("DIVISION BY 0")
+        return 0;
+    }
     return a/b;
 }
 
