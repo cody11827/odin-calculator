@@ -64,12 +64,7 @@ function calculate(){
     return newNumber
 }
 
-
-function onCalculatorButtonClicked(e){
-    let target = e.target;
-
-    let newInput = e.target.textContent;
-
+function inputToCalculator(newInput){
     if(newInput == "clr"){
         calculatorInput = "";
         operator = null;
@@ -111,8 +106,32 @@ function onCalculatorButtonClicked(e){
     }
     
     inputBox.placeholder = calculatorInput;
-
 }
+
+
+function onCalculatorButtonClicked(e){
+    let target = e.target;
+
+    let newInput = e.target.textContent;
+
+    inputToCalculator(newInput);
+}
+
+
+function onKeyboardPress(event){
+    let key = event.key;
+    if(key === 'Enter') key = '=';
+    if(key === 'Escape' || key === 'Backspace') key = 'clr';
+
+    const validKeys = '0123456789+-*/=clr';
+
+    if(!validKeys.includes(key)){
+        return;
+    }
+
+    inputToCalculator(key);
+} 
+
 
 
 let buttons = document.querySelector(".buttons");
@@ -120,3 +139,6 @@ let buttons = document.querySelector(".buttons");
 
 
 buttons.addEventListener("click",onCalculatorButtonClicked)
+
+
+document.addEventListener('keydown',onKeyboardPress)
